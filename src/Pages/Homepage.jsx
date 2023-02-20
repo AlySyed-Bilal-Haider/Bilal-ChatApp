@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Container, Box } from "@chakra-ui/react";
 import {
   Tabs,
@@ -10,10 +10,18 @@ import {
 } from "@chakra-ui/react";
 import Signup from "../Components/Authentications/Signup";
 import Login from "../Components/Authentications/Login";
-
+import { useNavigate } from "react-router-dom";
 function Homepage() {
+  const navigate = useNavigate();
+  useEffect(() => {
+    const userInfo = localStorage.getItem("chatoken");
+    if (userInfo) {
+      navigate("/chatpages");
+    }
+  }, []);
+
   return (
-    <Container mixW="xl" centerContent>
+    <Container maxW="xl" centerContent>
       <Box
         d="flex"
         justifyContent="center"

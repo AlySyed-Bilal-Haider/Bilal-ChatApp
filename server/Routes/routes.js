@@ -1,0 +1,16 @@
+import * as chatAPI from "../Controllers/Chats.js";
+import * as allusers from "../Controllers/allUsers.js";
+import * as userController from "../Controllers/UserController.js";
+import express from "express";
+const routes = express.Router();
+routes.post("/registerUser", userController.registerUser);
+routes.post("/loginuser", userController.loginHandler);
+routes.get("/tokenverfiy", userController.tokenverfiy);
+routes.get("/search", allusers.getalluser);
+routes.post("/api/accessChat", chatAPI.accessChat);
+routes.get("/fetchChat", chatAPI.fetchChat);
+routes.post("/group", chatAPI.groupChat);
+routes.put("/renameChat", chatAPI.renameGroupChatname);
+routes.put("/removeFromGroup", chatAPI.removeFromGroup);
+routes.put("/groupAdd", chatAPI.addToGroup);
+export default routes;

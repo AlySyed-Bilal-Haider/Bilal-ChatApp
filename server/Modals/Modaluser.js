@@ -19,5 +19,5 @@ const userSchema = new Schema(
   { timestaps: true }
 );
 
-const userModal = mongoose.model("users", userSchema);
+const userModal = mongoose.model("chatusers", userSchema);
 export default userModal;

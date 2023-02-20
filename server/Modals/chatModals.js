@@ -7,7 +7,7 @@ const chatModal = new Schema(
     users: [
       {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "User",
+        ref: "users",
       },
     ],
     latestMessage: {
@@ -16,7 +16,7 @@ const chatModal = new Schema(
     },
     groupAdmin: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
+      ref: "users",
     },
   },
   {
@@ -24,5 +24,5 @@ const chatModal = new Schema(
   }
 );
 
-const User = mongoose.model("chats", chatModal);
-export default User;
+const Chats = mongoose.model("chats", chatModal);
+export default Chats;
