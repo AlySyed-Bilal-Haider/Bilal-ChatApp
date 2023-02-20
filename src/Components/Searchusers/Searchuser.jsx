@@ -1,10 +1,12 @@
 import React from "react";
 import { Box, Text } from "@chakra-ui/react";
-function Searchuser({ users, handlefunction }) {
+function Searchuser({ users, handlefunction, id }) {
   return (
     <>
       <Box
-        onClick={handlefunction}
+        onClick={() => {
+          handlefunction(id);
+        }}
         cursor="pointer"
         bg="#E8E8E8"
         w="100%"

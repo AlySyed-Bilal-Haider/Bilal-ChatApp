@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import {
   Text,
   Button,
@@ -9,18 +9,14 @@ import {
   MenuItem,
   MenuGroup,
   MenuDivider,
-  ModalBody,
   Input,
   Drawer,
   DrawerBody,
-  DrawerFooter,
   DrawerHeader,
   DrawerOverlay,
   DrawerContent,
   DrawerCloseButton,
   useDisclosure,
-  Box,
-  Toast,
   useToast,
 } from "@chakra-ui/react";
 import Chatloading from "../ChatLoading/Chatloading";
@@ -28,6 +24,7 @@ import ProfileModal from "../ProfileModal/ProfileModal";
 import { BellIcon, ChevronDownIcon } from "@chakra-ui/icons";
 import { useNavigate } from "react-router-dom";
 import Searchuser from "../Searchusers/Searchuser";
+import { Chatcontext } from "../Context/ContextProvider";
 import axios from "axios";
 const url = "http://localhost:5000";
 function Sidebardrawer() {
@@ -35,6 +32,7 @@ function Sidebardrawer() {
   const [result, setResultstate] = useState([]);
   const toast = useToast();
   const [search, setSearchstate] = useState("");
+  const { chats, setSelectedChat, setChatstate } = useContext(Chatcontext);
   const navgiate = useNavigate();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = React.useRef();
@@ -68,19 +66,36 @@ function Sidebardrawer() {
     }
   };
 
-  const chataccess = async (users) => {
+  const chataccess = async (_id) => {
     try {
       setloading(true);
       const { data } = await axios.post(`${url}/api/accessChat`, {
-        userId: users,
+        userId: _id,
       });
-      console.log(data, "chat access");
+
+      console.log("chat access:", data);
+      if (!chats.find((c) => c.id === data?._id)) {
+        setChatstate([data, ...chats]);
+      }
+      setSelectedChat(data);
       setloading(false);
       onClose();
     } catch (error) {
-      console.log("chat access error", error);
       setloading(false);
+      toast({
+        title: "Error fatching the chat",
+        description: error.message,
+        status: "warning",
+        duration: 5000,
+        isClosable: true,
+        position: "top-left",
+      });
     }
+  };
+
+  const handleMethod = (id) => {
+    console.log("user ids:", id);
+    chataccess(id);
   };
   return (
     <>
@@ -171,9 +186,8 @@ function Sidebardrawer() {
                       <Searchuser
                         users={users?.name}
                         key={users._id}
-                        handlefunction={() => {
-                          chataccess(users._id);
-                        }}
+                        handlefunction={handleMethod}
+                        id={users?._id}
                       />
                     );
                   })}

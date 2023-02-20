@@ -4,13 +4,18 @@ export const Chatcontext = createContext();
 const ChatProvider = ({ children }) => {
   const navigate = useNavigate();
   const [users, setUsers] = useState("");
-  const [setSelect, setSelectedstate] = useState("");
+  const [setSelect, setSelectedChat] = useState("");
   const [chats, setChatstate] = useState("");
   useEffect(() => {
     const userInfo = localStorage.getItem("chatoken");
-    console.log("userInfo:", userInfo);
-    if (!users) {
+    if (!users && !userInfo) {
       navigate("/");
+    } else {
+      if (users) {
+        setUsers(users);
+      } else {
+        setUsers(userInfo);
+      }
     }
   }, []);
   console.log("user token:", users);
@@ -20,7 +25,7 @@ const ChatProvider = ({ children }) => {
         users,
         setUsers,
         setSelect,
-        setSelectedstate,
+        setSelectedChat,
         chats,
         setChatstate,
       }}

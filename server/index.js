@@ -15,7 +15,7 @@ const URL =
 connectDB(URL);
 app.use("/", routes);
 app.use(notfound);
-app.use(errorHandle);
+// app.use(errorHandle);
 app.listen(port, (req, res) => {
   console.log("Run API successfully", port);
 });

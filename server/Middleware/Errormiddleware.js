@@ -5,6 +5,7 @@ export const notfound = (req, res, next) => {
 };
 
 export const errorHandle = (error, req, res, next) => {
+  let statusCode;
   const statuserror = res.statusCode === 200 ? 500 : statusCode;
   res.status(statuserror);
   res.json({
