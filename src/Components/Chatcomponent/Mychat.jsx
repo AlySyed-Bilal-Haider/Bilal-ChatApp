@@ -12,9 +12,7 @@ function Mychat() {
   const fetchchat = async (_id) => {
     try {
       setloading(true);
-      const { data } = await axios.get(`${url}/fetchChat`, {
-        userId: _id,
-      });
+      const { data } = await axios.get(`${url}/api/accessChat`);
       setChatstate(data);
       setloading(false);
     } catch (error) {

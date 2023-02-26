@@ -73,7 +73,7 @@ function Sidebardrawer() {
         userId: _id,
       });
 
-      console.log("chat access:", data);
+      console.log("chat access sideDrawer:", data, "chats:", chats);
       if (!chats.find((c) => c.id === data?._id)) {
         setChatstate([data, ...chats]);
       }
